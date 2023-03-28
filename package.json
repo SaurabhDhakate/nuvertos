@@ -4,16 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install-fe-package": "cd ./server && npm i",
+    "install-be-package": "cd ./compounds && npm i",
+    "start-be-server": "node server/index.js",
+    "start-fe-server": "cd ./compounds && ng serve"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "csvtojson": "^2.0.10",
     "express": "^4.18.2",
-    "mysql": "^2.18.1",
-    "mysql2": "^3.2.0",
-    "mysqlconnector": "^2.0.1"
+    "mysql2": "^3.2.0"
   }
 }
