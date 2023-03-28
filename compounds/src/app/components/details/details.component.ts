@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpService } from 'src/app/http.service';
 
 @Component({
   selector: 'app-details',
@@ -12,7 +12,7 @@ export class DetailsComponent implements OnInit {
   id: any;
   details: any;
   editing: boolean = false;
-  constructor(public activatedRoute: ActivatedRoute, private http: HttpClient) {
+  constructor(public activatedRoute: ActivatedRoute, private service: HttpService) {
   }
   
   ngOnInit(): void {
@@ -22,10 +22,10 @@ export class DetailsComponent implements OnInit {
   setData(id) {
     this.editing = false;
     this.id = id;
-    this.details = this.http.get(`http://localhost:8000/api/details/${id}`);
+    this.details = this.service.getDetails(id);
   }
 
   updateDesc(desc) {
-   this.http.put(`http://localhost:8000/api/description/${this.id}`, {CompounrDescription: desc}).subscribe( data => this.setData(this.id));
+    this.service.updateDescription(this.id, {CompounrDescription: desc}).subscribe( data => this.setData(this.id));
   }
 }

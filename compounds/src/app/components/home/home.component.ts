@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from '@angular/common/http'
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs';
+import { HttpService } from 'src/app/http.service';
 
 @Component({
   selector: 'app-home',
@@ -13,24 +13,25 @@ export class HomeComponent implements OnInit {
   public compounds: Observable<any> = of(null);
   public pageNum: number = 1;
   public array: null[] = [];
+  public deleteId: any;
 
-  constructor(public http: HttpClient) {}
+  constructor(public service: HttpService) {}
 
   ngOnInit(): void {
-    this.compounds = this.http.get('http://localhost:8000/api/compounds?limit=10&offset=0').pipe(tap(data => this.array.length = Math.ceil(data.count[0].COUNT/10)));
+    this.compounds =this.service.getCompounds(10,10).pipe(tap(data => this.array.length = Math.ceil(data.count[0].COUNT/10)));
   }
 
   getData(pageNum) {
     this.pageNum = pageNum;
     let offset = (this.pageNum - 1)*10;
-    this.compounds = this.http.get(`http://localhost:8000/api/compounds?limit=10&offset=${offset}`);
+    this.compounds = this.service.getCompounds(10,offset);
   }
 
   addComp(data) {
-    this.http.post(`http://localhost:8000/api/compounds`, data).subscribe( data => this.ngOnInit())
+    this.service.addComponent(data).subscribe( data => this.ngOnInit())
   }
 
   deleteComp(id) {
-    this.http.delete(`http://localhost:8000/api/compound/${id}`).subscribe(()=>this.ngOnInit())
+    this.service.delete(id).subscribe(()=>this.ngOnInit())
   }
 }

@@ -1,14 +1,30 @@
-<div class="container-fluid">
+<div class="container-fluid bg-light">
 <div class="row d-flex">
   
+  <!-- Button trigger modal -->
   <div>
-    
-    <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary mt-3 float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Add New Component
-  </button>
-</div>
-<!-- Modal -->
+    <button type="button" class="btn btn-primary mt-3 float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Add New Component
+    </button>
+  </div>
+<!-- Confirm Modal -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure to delete this component.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" (click)="deleteComp(deleteId)" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Add Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content" *ngIf="{name:'', desc:'', img:'', attr:''} as comp">
@@ -47,13 +63,14 @@
             <div class="card p-3 mt-4">
               <div class="col-md-12">
                 <h5 class="card-title">{{item.CompoundName}}</h5>
+                <hr>
               </div>
                 <div class="col-12 justify-content-center d-flex">
-                    <img [src]="item.strImageSource" alt="..." height="100px" style="width: fit-content;">
+                    <img [src]="item.strImageSource" [alt]="item.strImageAttribution" height="100px" style="width: fit-content;">
                 </div>
                 <div class="card-body">
-                  <a href="/details/{{item.id}}" class="btn btn-primary">View Details</a>
-                  <a (click)="deleteComp(item.id)" class="btn btn-danger ms-3">Delete</a>
+                  <a href="/details/{{item.id}}" class="btn btn-info text-white">View Details</a>
+                  <a (click)="deleteId = item.id" class="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#confirmModal">Delete</a>
                 </div>
             </div>
           </div>

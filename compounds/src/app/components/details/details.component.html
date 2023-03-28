@@ -12,7 +12,7 @@
           <div class="mb-3" *ngIf="editing">
             <textarea class="form-control" rows="3" [value]="item.CompounrDescription" (input)="item.CompounrDescription = $event.target.value;"></textarea>
           </div>
-          <img class="card-img" [src]="item.strImageSource" height="200px" style="width:fit-content;">
+          <img class="card-img" [src]="item.strImageSource" [alt]="item.strImageAttribution" height="200px" style="width:fit-content;">
         </div>
         <div class="card-footer text-body-secondary">
           {{item.dateModified}}
