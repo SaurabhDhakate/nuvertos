@@ -1,0 +1,69 @@
+<div class="container-fluid">
+<div class="row d-flex">
+  
+  <div>
+    
+    <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary mt-3 float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Add New Component
+  </button>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" *ngIf="{name:'', desc:'', img:'', attr:''} as comp">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Component</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Name</label>
+          <input type="email" class="form-control" [(ngModel)]="comp.name">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+          [value]="comp.desc" (input)="comp.desc = $event.target.value;"></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Image source</label>
+          <input type="email" class="form-control" [(ngModel)]="comp.img">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Image Attr</label>
+          <input type="email" class="form-control" [(ngModel)]="comp.attr">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addComp(comp)">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <ng-container *ngIf="compounds | async as items">
+        <div class="col-md-4"  *ngFor="let item of items.data">
+            <div class="card p-3 mt-4">
+              <div class="col-md-12">
+                <h5 class="card-title">{{item.CompoundName}}</h5>
+              </div>
+                <div class="col-12 justify-content-center d-flex">
+                    <img [src]="item.strImageSource" alt="..." height="100px" style="width: fit-content;">
+                </div>
+                <div class="card-body">
+                  <a href="/details/{{item.id}}" class="btn btn-primary">View Details</a>
+                  <a (click)="deleteComp(item.id)" class="btn btn-danger ms-3">Delete</a>
+                </div>
+            </div>
+          </div>
+          <nav aria-label="...">
+            <ul class="pagination mt-4">
+              <li class="page-item" [class.active]="i+1==pageNum" *ngFor="let num of array; let i = index;">
+                <a class="page-link" (click)="getData(i+1)">{{i + 1}}</a>
+              </li>
+            </ul>
+          </nav>
+    </ng-container>
+</div>
+</div>

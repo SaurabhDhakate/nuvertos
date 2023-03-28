@@ -1,0 +1,21 @@
+<div *ngFor="let item of details | async" class="p-5">
+    <div class="card text-center">
+        <div class="card-header">
+          Details
+          <span class="btn btn-link p-0" style="float: right;"  *ngIf="!editing" (click)="editing = true">Edit</span>
+          <span class="btn btn-link p-0 ms-2" style="float: right;"  *ngIf="editing" (click)="updateDesc(item.CompounrDescription)">Save</span>
+          <span class="btn btn-link p-0 ms-2" style="float: right;"  *ngIf="editing" (click)="editing = false">Cancel</span>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{item.CompoundName}}</h5>
+          <p class="card-text" *ngIf="!editing">{{item.CompounrDescription }}</p>
+          <div class="mb-3" *ngIf="editing">
+            <textarea class="form-control" rows="3" [value]="item.CompounrDescription" (input)="item.CompounrDescription = $event.target.value;"></textarea>
+          </div>
+          <img class="card-img" [src]="item.strImageSource" height="200px" style="width:fit-content;">
+        </div>
+        <div class="card-footer text-body-secondary">
+          {{item.dateModified}}
+        </div>
+      </div>
+</div>
